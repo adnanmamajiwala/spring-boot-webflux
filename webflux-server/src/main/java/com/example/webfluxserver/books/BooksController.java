@@ -21,7 +21,7 @@ public class BooksController {
 
     private final BooksService service;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Book> all() {
         return service.getAll();
     }

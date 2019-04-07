@@ -35,7 +35,7 @@ public class BooksService {
     }
 
     public Flux<BookEvent> eventStream(Book book) {
-        Flux<Long> interval = Flux.interval(Duration.ofSeconds(1)).take(10);
+        Flux<Long> interval = Flux.interval(Duration.ofSeconds(2)).take(5);
         Flux<BookEvent> events = Flux.fromStream(Stream.generate(() -> new BookEvent(book, new Date(), getUser())));
         return Flux.zip(interval, events)
                 .map(Tuple2::getT2);
