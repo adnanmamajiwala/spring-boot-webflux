@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Becoming",
+    "author": "Michelle Obama",
+    "category": "Biography"
+  },
+  {
+    "name": "Howard Stern Comes Again",
+    "author": "Howard Stern",
+    "category": "Biography"
+  },
+  {
+    "name": "The Right Time",
+    "author": "Danielle Steel",
+    "category": "Fiction"
+  },
+  {
+    "name": "A Gentleman in Moscow",
+    "author": "Amor Towles",
+    "category": "Fiction"
+  },
+  {
+    "name": "Unfreedom of the Press",
+    "author": "Mark R. Levin",
+    "category": "History"
+  },
+  {
+    "name": "Guns, Germs, and Steel: The Fates of Human Societies",
+    "author": "Jared Diamond",
+    "category": "History"
+  },
+  {
+    "name": "Lincoln's Last Trial: The Murder Case That Propelled Him to the Presidency",
+    "author": "Dan Abrams, David Fisher",
+    "category": "History"
+  },
+  {
+    "name": "The Moonstone",
+    "author": "Wilkie Collins",
+    "category": "Mystery"
+  },
+  {
+    "name": "Wild Card",
+    "author": "Stuart Woods",
+    "category": "Mystery"
+  },
+  {
+    "name": "Master & Apprentice",
+    "author": "Claudia Gray",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "All My Colors",
+    "author": "David Quantick",
+    "category": "Sci-Fi"
+  }
+]
+
