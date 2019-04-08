@@ -56,7 +56,6 @@ public class BooksRepositoryTest {
     }
 
     @Test
-    @Ignore
     public void givenAccount_whenSave_thenSave() {
         Flux<Book> bookFlux = repository.findAll();
         StepVerifier
@@ -68,6 +67,7 @@ public class BooksRepositoryTest {
 //                    assertThat(book.getAuthor()).isEqualToIgnoringCase(expected.getAuthor());
 //                    assertThat(book.getCategory()).isEqualToIgnoringCase(expected.getCategory());
                 })
+
                 .expectComplete()
                 .verify();
     }
