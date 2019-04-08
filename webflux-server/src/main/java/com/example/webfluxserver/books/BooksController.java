@@ -44,7 +44,7 @@ public class BooksController {
     @GetMapping(value = "/{id}/events", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<BookEvent> events(@PathVariable String id) {
         return service.getById(id)
-                .flatMapMany(service::eventStream);
+                .flatMapMany(service::liveEvents);
     }
 
 }
