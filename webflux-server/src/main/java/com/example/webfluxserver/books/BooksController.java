@@ -15,8 +15,8 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/books")
 @RequiredArgsConstructor
+@RequestMapping("/books")
 public class BooksController {
 
     private final BooksService service;
@@ -27,7 +27,7 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public Mono<Book> byId(@PathVariable String id) {
+    public Mono<Book> byId(@PathVariable("id") String id) {
         return service.getById(id);
     }
 
