@@ -12,8 +12,12 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @WebFluxTest(BooksController.class)
@@ -44,6 +48,8 @@ public class BooksControllerIT {
                 .expectBodyList(Book.class)
                 .hasSize(2)
                 .contains(expected, expected2);
+
+        verify(booksService, times(1)).getAll();
     }
 
     @Test
@@ -56,6 +62,8 @@ public class BooksControllerIT {
                 .exchange()
                 .expectBody(Book.class)
                 .isEqualTo(expected);
+
+        verify(booksService, times(1)).getById(anyString());
     }
 
     @Test
@@ -68,7 +76,24 @@ public class BooksControllerIT {
                 .exchange()
                 .expectBody(Book.class)
                 .isEqualTo(expected);
+
+        verify(booksService, times(1)).getByName("Test1");
     }
 
+    @Test
+    public void events_returnsStreamingEventsOfBookEvent() {
+        BookEvent expectedBookEvent = new BookEvent(expected, new Date(), "TestUser");
+        given(booksService.getById("book-id")).willReturn(Mono.just(expected));
+        given(booksService.liveEvents(expected)).willReturn(Flux.just(expectedBookEvent));
 
+        webTestClient.get()
+                .uri("/books/book-id/events")
+                .accept(MediaType.APPLICATION_STREAM_JSON)
+                .exchange()
+                .expectBody(BookEvent.class)
+                .isEqualTo(expectedBookEvent);
+
+        verify(booksService, times(1)).getById("book-id");
+        verify(booksService, times(1)).liveEvents(expected);
+    }
 }

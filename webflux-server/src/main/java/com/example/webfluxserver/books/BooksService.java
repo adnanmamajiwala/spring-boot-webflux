@@ -35,7 +35,8 @@ public class BooksService {
     public Flux<BookEvent> liveEvents(Book book) {
         return Flux.interval(Duration.ofSeconds(2))
                 .take(5)
-                .map(val -> new BookEvent(book, new Date(), getUser()));
+                .map(val -> new BookEvent(book, new Date(), getUser()))
+                .log();
     }
 
     private String getUser() {
