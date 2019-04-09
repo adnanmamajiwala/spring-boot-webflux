@@ -25,7 +25,9 @@ public class BooksService {
     }
 
     public Mono<Book> getByName(String name) {
-        return repository.findByName(name);
+        return repository
+                .findByName(name)
+                .switchIfEmpty(Mono.error(new NoBookFoundException("No book was found with name: " + name)));
     }
 
     public Mono<Book> insert(Book book) {
