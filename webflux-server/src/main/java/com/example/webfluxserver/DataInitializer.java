@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 @Configuration
 @Slf4j
@@ -22,9 +22,8 @@ public class DataInitializer {
                 .count()
                 .subscribe(val -> {
                     if (val == 0) {
-                        Stream.of(getBooks())
-                                .map(repository::save)
-                                .forEach(bookMono -> bookMono.subscribe(book -> log.debug(book.toString())));
+                        repository.saveAll(Arrays.asList(getBooks()))
+                                .subscribe(book -> log.debug(book.toString()));
                     }
                 });
     }
