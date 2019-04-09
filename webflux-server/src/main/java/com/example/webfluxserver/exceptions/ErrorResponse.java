@@ -1,4 +1,4 @@
-package com.example.webfluxserver.books;
+package com.example.webfluxserver.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

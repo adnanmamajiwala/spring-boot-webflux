@@ -2,7 +2,6 @@ package com.example.webfluxserver.books;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -44,14 +43,4 @@ public class BooksController {
                 .flatMapMany(service::liveEvents);
     }
 
-
-    @ExceptionHandler(value = NoBookFoundException.class)
-    @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    public ErrorResponse handleError(NoBookFoundException ex) {
-        log.error("Error in trying to find data ", ex);
-        return ErrorResponse.builder()
-                .message(ex.getMessage())
-                .status(HttpStatus.NOT_FOUND.toString())
-                .build();
-    }
 }
