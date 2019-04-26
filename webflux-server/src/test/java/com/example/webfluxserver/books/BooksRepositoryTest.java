@@ -1,6 +1,7 @@
 package com.example.webfluxserver.books;
 
 import com.example.webfluxserver.WebfluxServerApplication;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,19 @@ public class BooksRepositoryTest {
 
     @Autowired
     private BooksRepository repository;
+    private Book book1;
+    private Book book2;
+
+    @Before
+    public void setUp() throws Exception {
+        repository.deleteAll().block();
+        book1 = new Book("1", "Book1", "Author1", "Category");
+        book2 = new Book("2", "Hello", "Test", "Sample");
+        repository.saveAll(Arrays.asList(book1, book2)).subscribe();
+    }
 
     @Test
     public void findById_whenValidId_thenFindMatchingId() {
-        Book book1 = new Book("1", "Book1", "Author1", "Category");
-        Book book2 = new Book("2", "Hello", "Test", "Sample");
-        repository.saveAll(Arrays.asList(book1, book2)).subscribe();
-
         Mono<Book> bookMono = repository.findById("1");
 
         StepVerifier
@@ -59,14 +66,13 @@ public class BooksRepositoryTest {
         Flux<Book> bookFlux = repository.findAll();
         StepVerifier
                 .create(bookFlux)
-//                .expectNextCount(10)
+                .expectNext(book1)
                 .assertNext(book -> {
-                    assertThat(book.getId()).isNotNull();
-//                    assertThat(book.getName()).isEqualToIgnoringCase(expected.getName());
-//                    assertThat(book.getAuthor()).isEqualToIgnoringCase(expected.getAuthor());
-//                    assertThat(book.getCategory()).isEqualToIgnoringCase(expected.getCategory());
+                    assertThat(book.getId()).isEqualTo(book2.getId());
+                    assertThat(book.getName()).isEqualToIgnoringCase(book2.getName());
+                    assertThat(book.getAuthor()).isEqualToIgnoringCase(book2.getAuthor());
+                    assertThat(book.getCategory()).isEqualToIgnoringCase(book2.getCategory());
                 })
-
                 .expectComplete()
                 .verify();
     }
